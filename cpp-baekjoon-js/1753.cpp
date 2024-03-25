@@ -78,7 +78,7 @@ vector<int> dijkstar(int start, int V){
                 distance[next] = distance[current_v] + value;
                 pq.push(make_pair(distance[next], next));
             }
-            // 더 잛은 거리가 나올 경우 값을 갱신한다
+            // 더 짧은 거리가 나올 경우 값을 갱신한다
         }
     }
     return distance;
