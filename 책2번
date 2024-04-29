@@ -1,0 +1,61 @@
+#include<iostream>
+#include<vector>
+#include<queue>
+#include<limits.h>
+using namespace std;
+
+typedef pair<int, int> edge;
+static int N,M;
+static vector<int> price;
+static vector<bool> visited;
+static vector<vector<edge>> mlist;
+static priority_queue<edge, vector<edge>, greater<edge>> pq;
+
+int main() {
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cin.tie(NULL);
+
+	cin >> N >> M;
+	price.resize(N + 1);
+	fill(price.begin(), price.end(), INT_MAX);
+	price.resize(N + 1);
+	fill(visited.begin(), visited.end(), false);
+	mlist.resize(N + 1);
+
+	for (int i = 0; i < M; i++) {
+		int s, e, w;
+		cin >> s >> e >> w;
+		mlist[s].push_back(make_pair(e, w));
+	}
+
+	int dijkstra(int s, int e);
+	int startind, endind;
+	cin >> startind >> endind;
+	int result = dijkstra(startind, endind);
+	cout << result << "\n";
+
+}
+
+int dijkstra(int s,int e){
+	pq.push(make_pair(0, s));
+	price[s] = 0;
+
+	while (!pq.empty()) {
+		edge nowNode = pq.top();
+		pq.pop();
+		int now = nowNode.second;
+
+		if (!visited[now]) {
+			visited[now] = true;
+			for (edge n : mlist[now]) {
+				if (!visited[n.first] && price[n.first] > price[now] + n.second) {
+					price[n.first] = price[now] + n.second;
+					pq.push(make_pair(price[n.first], n.first));
+				}
+			}
+		}
+	}
+	return price[e];
+}
+
